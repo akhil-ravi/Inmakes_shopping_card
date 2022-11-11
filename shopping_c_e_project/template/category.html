@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+    {% if category %}
+    {{ category.description|truncatewords:155 }}
+    {% else %}
+    <h3> welcome to foOd hOusE where you can buys foods items .....</h3>
+     {% endif %}
+{% endblock %}
+
+{% block title %}
+    {% if category %}
+    {{ category.name }} - foOd hOusE
+    {% else %}
+     SEE THE FOOD ITEMS
+     {% endif %}
+{% endblock %}
+
+{% block content %}
+{% if category %}
+
+   <div class="my_image my_image_padding">
+       <div>
+           <h4 ><a href="{% url 's_card_econ_app:allProdCat' %}" > our food collections</a> </h4>
+       </div>
+   </div>
+   {% endif %}
+<div class="mx_auto">
+    {% if category %}
+    <img class="my_image" src="{{category.image.url}}" width="600" height="350" alt="{{category.name}}">
+</div>
+<br>
+<div>
+    <h1 class="tex-center my_title">{{category.name}}</h1>
+    <p class="text-justify">{{category.description}}</p>
+</div>
+  {% else %}
+<div >
+    <img class="my_image my_image_padding"  src="{% static 'img/food.jpg' %}" alt="our products" width="1342px;" height="550;">
+</div>
+<br>
+<div>
+<h1 class="text-center my_title" style="color:azure;">our food collections</h1>
+<p class="text-justify">The effective management of food intake and nutrition are both key to good health. Smart nutrition and food choices can help prevent disease. Eating the right foods can help your body cope more successfully with an ongoing illness. Understanding good nutrition and paying attention to what you eat can help you maintain or improve your health.</p>
+</div>
+ {% endif %}
+<div class="container">
+    <div class="row mx_auto">
+        {% for product in products.object_list %}
+    <div style="min-width:18rem; " class="my_bottom_margin col-12 col-sm-6  col-md-12  col-lg-4  "  >
+        <div class="card text-center ">
+                <a  href="{{product.get_url}}"><img class="card-img-top my_image"  src="{{product.image.url}}" alt="{{product.name}}"  height='200px' > </a>
+                <div class="card-body">
+                    <h1 style="font-size:18px;" >{{product.name}}</h1>
+                    <p>{{product.price}}</p>
+                </div>
+                </div>
+         </div>
+        {% endfor %}
+        </div>
+   <div class="mx-auto">
+    {%  if products.paginator.num_pages > 1 %}
+        <hr>
+    <div class="text-center">
+    {% for pg in products.paginator.page_range %}
+    <a href="?page={{pg}}" class="btn btn-light btn-sm {% if products.number == pg %}active {% endif %}"> {{pg}}</a>
+    {% endfor %}
+     </div>
+      {% endif %}
+</div>
+<br>
+</div>
+{% endblock %}
+
+
+

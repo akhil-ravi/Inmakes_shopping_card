@@ -1,0 +1,46 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+
+      <li class="nav-item">
+          <a class="nav-link" href="{% url 's_card_econ_app:allProdCat' %}"><h4 style="color:yellow;">FOOD HOUSE</h4></a>
+      </li>
+      <li class="nav-item dropdown {% if 's_card_econ_app' in request.path %}active{% endif %}">
+        <a class="nav-link dropdown-toggle" href="{% url 's_card_econ_app:allProdCat' %}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Food Items
+        </a>
+        <li class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="">all products</a>
+             {% for cat in links %}
+        <li>  <a class="dropdown-item" style="color:brown;" href="{{ cat.get_url }}">{{cat.name}}</a>
+             {% endfor %}
+        </li>
+
+       {% if item_count > 0 %}
+
+      <li class="nav-item">
+        <a class="nav-link disabled" href="{%  url 's_card_econ_app_03:cart_detail' %}" > <i style="color:aqua;" class="fa fa-shopping-cart" aria-hidden="true"></i>({{item_count }})</a>
+         </li>
+
+        <form class="fa fa-credit-card-alt" action="{% url 's_card_econ_app:allProdCat' %}" method="get">
+      {% csrf_token %}
+      <button class="btn btn-danger fa fa-credit-card-alt btn btn-outline-success" style="" type="submit"><i class="fa fa-credit-card-alt"></i><b style="color:white;">pay</b></button>
+       </form>
+
+      {% endif %}
+    </ul>
+
+       <form class="d-flex" action="{% url 's_card_econ_app_02:searchResult' %}" method="get">
+      {% csrf_token %}
+
+      <input class="form-control me-2" type="search" placeholder="Search" name="q" aria-label="Search">
+      <button class="btn btn-outline-success" type="submit"><i class="fa fa-search" ></i></button>
+       </form>
+
+  </div>
+</nav>
+

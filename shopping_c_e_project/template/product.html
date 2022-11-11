@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+
+    {{ product.description|truncatewords:155 }}
+
+     welcome to foOd hOusE where you can buys foods items .....
+
+{% endblock %}
+
+{% block title %}
+    {% if category %}
+    {{ product.name }} - foOd hOusE
+
+     {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="row my_product_row_class">
+    <div class="mx_auto">
+        <p><a href="{% url 's_card_econ_app:allProdCat'%}">HOME</a> | <a href="{{product.category.get_url}}">{{product.category}}</a>{{product.name}} </p>
+    </div>
+    <div class="container">
+
+<br>
+<div class="row">
+    <div class="col-12 col-sm-12 col-md-6 col-lg-6 text-center ">
+        <div  >
+            <img  src="{{product.image.url}}" class="col-12 col-sm-12 col-md-12 col-lg-6 "  alt="{{product.name}}">
+        </div>
+    </div>
+    <div class="col-6 col-sm-6 col-md-6 col-lg-6 " style="width:300; height:300">
+        <h1 class="my_pro_title" style="color: ;">{{product.name}}</h1>
+        <p style="color:">Rs${{product.price}}</p>
+        <h2 class="my_title " style="color:orange;">product Description</h2>
+        <p class="my_justify my_pro_text ">{{product.description}}</p>
+        {% if product.Stock <= 0 %}
+        <p class="text-justify my-pro_text"><b>No stock available</b></p>
+        {% else %}
+        <a class="btn btn-secondary" href="{% url 's_card_econ_app_03:add_cart' product.id %}">Add to Cart</a>
+        {% endif %}
+
+    </div>
+</div>
+    </div>
+</div>
+
+    {% endblock %}
